@@ -1585,9 +1585,65 @@ print(isinstance([], Iterable))
 
 迭代器是一个可以记住遍历的位置的对象。送代器对象从第一个元素开始访问，直到所有的元素被访问完结束。送代器只能往前不会后退。
 
+```
+list1 = [11, 22, 33, 44]
+iter_list =iter(list1)		# iter() 获取迭代器
+print(next(iter_list))		# next() 取迭代器的值
+print(next(iter_list))
+print(next(iter_list))
+print(next(iter_list))
+
+print("++++++++++++++++++++")
+for num in list1:
+    print(num)
+
+'''
+11
+22
+33
+44
+++++++++++++++++++++
+11
+22
+33
+44
+'''
+```
+
+### 1.6 next()取值的异常
+
+```python
+list1 = [11, 22, 33, 44]
+iter_list =iter(list1)		# iter() 获取迭代器
+print(next(iter_list))		# next() 取迭代器的值
+print(next(iter_list))
+print(next(iter_list))
+print(next(iter_list))
+#print(next(iter_list))		# 第5个元素不存在，迭代器取值时会报错
+
+# 处理next()异常
+try:
+    print(next(iter_list))
+except StopIteration as ret:
+    print("警告：迭代器取值，超过了元素个数")
 
 
+print("++++++++++++++++++++")
+for num in list1:
+    print(num)
 
+'''
+Traceback (most recent call last):
+  File "D:\PLearning\迭代器\迭代器.py", line 7, in <module>
+    print(next(iter_list))		# 第5个元素不存在会报错
+StopIteration
+11
+22
+33
+44
+'''
+
+```
 
 
 
