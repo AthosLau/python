@@ -1642,12 +1642,80 @@ StopIteration
 33
 44
 '''
+```
 
+总结：list、tuple是可迭代对象，通过iter()获取迭代器，通过next()取迭代器的值，直到取不到值，迭代器报错。
+
+
+
+## 1.7 自定义while循环实现迭代器功能
+
+```python
+# 1、定义列表
+list1 = [11, 22, 33, 44]
+
+# 2、取列表的迭代器对象
+iter_list =iter(list1)
+
+# 3、循环取迭代器对象的值
+i = 1
+while i <= len(list1):
+    num = next(iter_list)
+    print(num)
+    i += 1
 ```
 
 
 
+## 1.8 自定义迭代器
 
+自定义类中，如何实现对象的可迭代呢？
+
+- \__iter__
+- \__next__
+
+当对一个对象，调用iter()时，会调用该对象的\__iter__()方法，这个方法返回的对象，当作迭代器_
+_当对一个对象，调用next()时，会调用该对象的\__next__()方法，这个方法返回的，就是想要的数据
+
+```python
+from collections.abc import Iterable, Iterator
+
+
+class MyList(object):
+    def __init__(self):
+        self.name_lists = []
+        self.current = 0
+
+    def add(self, name):
+        self.name_lists.append(name)
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.current < len(self.name_lists):
+            name = self.name_lists[self.current]
+            self.current += 1
+            return name
+        else:
+            raise StopIteration
+
+
+mylist = MyList()  # 可迭代对象
+mylist.add('athos')
+mylist.add('jack')
+mylist.add('bom')
+mylist_iter = iter(mylist)  # 迭代器
+
+for name in mylist:
+    print(name)
+
+'''
+athos
+jack
+bom
+'''
+```
 
 
 
